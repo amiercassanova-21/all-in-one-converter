@@ -56,7 +56,7 @@
                 inset 0 -2px 0 rgba(0, 0, 0, 0.4),
                 0 8px 25px -4px rgba(217, 119, 6, 0.45);
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
-            transition: all 0.2s ease;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .btn-gold-3d:hover {
             background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 40%, #d97706 100%);
@@ -91,6 +91,14 @@
             transform: translateY(-3px);
         }
 
+        /* Last Opened Highlight Card */
+        .glass-card-active {
+            border-color: #fbbf24 !important;
+            box-shadow: 
+                0 0 30px -5px rgba(245, 158, 11, 0.35),
+                inset 0 0 15px rgba(245, 158, 11, 0.1) !important;
+        }
+
         /* Gold Metallic Text Gradient */
         .gold-gradient-text {
             background: linear-gradient(135deg, #fef3c7 0%, #fbbf24 50%, #d97706 100%);
@@ -103,6 +111,18 @@
             background: rgba(245, 158, 11, 0.1);
             border: 1px solid rgba(245, 158, 11, 0.3);
             color: #fbbf24;
+        }
+
+        .last-used-badge {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(217, 119, 6, 0.15) 100%);
+            border: 1px solid #fbbf24;
+            color: #fef3c7;
+            animation: pulse-glow 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 8px rgba(251, 191, 36, 0.2); }
+            50% { box-shadow: 0 0 18px rgba(251, 191, 36, 0.6); }
         }
 
         /* Gloss Overlay Animation */
@@ -130,12 +150,22 @@
         .gloss-effect:hover::before {
             left: 100%;
         }
+
+        /* Status Online Pulse */
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #10b981;
+            display: inline-block;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between items-center px-4 py-8 antialiased">
 
     <!-- Header / Brand Section -->
-    <header class="w-full max-w-4xl text-center space-y-3 pt-4 mb-8">
+    <header class="w-full max-w-4xl text-center space-y-3 pt-4 mb-6">
         <div class="inline-flex items-center justify-center p-3 rounded-2xl bg-gradient-to-b from-amber-500/20 to-amber-900/10 border border-amber-500/30 shadow-2xl mb-2">
             <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-amber-600 to-yellow-400 flex items-center justify-center shadow-lg shadow-amber-500/40">
                 <i class="fa-solid fa-server text-gray-950 text-2xl font-black"></i>
@@ -146,30 +176,45 @@
             CASSANOVA
         </h1>
         
-        <div class="inline-block px-4 py-1 rounded-full gold-badge text-xs font-extrabold uppercase tracking-widest shadow-inner">
-            MULTI-PROTOCOL CONVERTER PORTAL
+        <div class="flex flex-wrap items-center justify-center gap-2">
+            <span class="px-4 py-1 rounded-full gold-badge text-xs font-extrabold uppercase tracking-widest shadow-inner">
+                MULTI-PROTOCOL CONVERTER PORTAL
+            </span>
         </div>
         
-        <p class="text-xs sm:text-sm text-slate-400 max-w-md mx-auto leading-relaxed">
+        <p class="text-xs sm:text-sm text-slate-400 max-w-md mx-auto leading-relaxed pt-1">
             Pilih layanan alat konversi jaringan yang sesuai dengan selera dan aplikasi client yang Anda gunakan.
         </p>
+
+        <!-- Quick Decoder Tool Trigger Button -->
+        <div class="pt-2">
+            <button onclick="openDecoderModal()" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900/90 border border-amber-500/30 text-amber-400 text-xs font-bold hover:bg-amber-500/10 hover:border-amber-500/60 transition shadow-lg">
+                <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i>
+                <span>🛠️ Quick Base64 & URL Decoder</span>
+            </button>
+        </div>
     </header>
 
     <!-- Main Hub Cards Grid (Ordered: 3, 2, 4, 1) -->
     <main class="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6 my-auto">
 
         <!-- CARD POSITION 1 (REPO 3: CLASH CONVERTER) -->
-        <div class="glass-card-3d gloss-effect rounded-2xl p-6 flex flex-col justify-between space-y-5">
+        <div id="card-clash" class="glass-card-3d gloss-effect rounded-2xl p-6 flex flex-col justify-between space-y-5">
             <div class="space-y-3">
                 <div class="flex items-center justify-between">
-                    <span class="text-2xl">🔥</span>
-                    <span class="text-[10px] font-mono px-2.5 py-1 rounded-full gold-badge font-bold">
-                        Clash Meta / Mihomo
-                    </span>
+                    <div class="flex items-center gap-2">
+                        <span class="status-dot"></span>
+                        <span class="text-xs font-semibold text-emerald-400">Online</span>
+                    </div>
+                    <div id="badge-clash-container" class="flex items-center gap-2">
+                        <span class="text-[10px] font-mono px-2.5 py-1 rounded-full gold-badge font-bold">
+                            Clash Meta / Mihomo
+                        </span>
+                    </div>
                 </div>
                 
                 <h2 class="text-xl font-extrabold text-white tracking-wide flex items-center gap-2">
-                    CLASH CONVERTER
+                    🔥 CLASH CONVERTER
                 </h2>
                 
                 <p class="text-xs text-slate-400 leading-relaxed">
@@ -183,24 +228,29 @@
                 </div>
             </div>
 
-            <a href="https://clash.cassanova.my.id" target="_blank" rel="noopener" 
+            <a href="https://clash.cassanova.my.id" target="_blank" rel="noopener" onclick="recordVisit('clash')"
                class="btn-gold-3d w-full py-3 rounded-xl font-extrabold text-xs text-slate-950 uppercase tracking-wider flex items-center justify-center gap-2">
                 <i class="fa-solid fa-fire"></i> Buka Clash Converter
             </a>
         </div>
 
         <!-- CARD POSITION 2 (REPO 2: SING-BOX CONVERTER) -->
-        <div class="glass-card-3d gloss-effect rounded-2xl p-6 flex flex-col justify-between space-y-5">
+        <div id="card-singbox" class="glass-card-3d gloss-effect rounded-2xl p-6 flex flex-col justify-between space-y-5">
             <div class="space-y-3">
                 <div class="flex items-center justify-between">
-                    <span class="text-2xl">📦</span>
-                    <span class="text-[10px] font-mono px-2.5 py-1 rounded-full gold-badge font-bold">
-                        reF1nd 1.14 Ready
-                    </span>
+                    <div class="flex items-center gap-2">
+                        <span class="status-dot"></span>
+                        <span class="text-xs font-semibold text-emerald-400">Online</span>
+                    </div>
+                    <div id="badge-singbox-container" class="flex items-center gap-2">
+                        <span class="text-[10px] font-mono px-2.5 py-1 rounded-full gold-badge font-bold">
+                            reF1nd 1.14 Ready
+                        </span>
+                    </div>
                 </div>
                 
                 <h2 class="text-xl font-extrabold text-white tracking-wide flex items-center gap-2">
-                    SING-BOX CONVERTER
+                    📦 SING-BOX CONVERTER
                 </h2>
                 
                 <p class="text-xs text-slate-400 leading-relaxed">
@@ -214,24 +264,29 @@
                 </div>
             </div>
 
-            <a href="https://singbox.cassanova.my.id" target="_blank" rel="noopener" 
+            <a href="https://singbox.cassanova.my.id" target="_blank" rel="noopener" onclick="recordVisit('singbox')"
                class="btn-gold-3d w-full py-3 rounded-xl font-extrabold text-xs text-slate-950 uppercase tracking-wider flex items-center justify-center gap-2">
                 <i class="fa-solid fa-bolt"></i> Buka Sing-Box Converter
             </a>
         </div>
 
         <!-- CARD POSITION 3 (REPO 4: XRAY STUDIO) -->
-        <div class="glass-card-3d gloss-effect rounded-2xl p-6 flex flex-col justify-between space-y-5">
+        <div id="card-xray" class="glass-card-3d gloss-effect rounded-2xl p-6 flex flex-col justify-between space-y-5">
             <div class="space-y-3">
                 <div class="flex items-center justify-between">
-                    <span class="text-2xl">🛠️</span>
-                    <span class="text-[10px] font-mono px-2.5 py-1 rounded-full gold-badge font-bold">
-                        LoadBalance Active
-                    </span>
+                    <div class="flex items-center gap-2">
+                        <span class="status-dot"></span>
+                        <span class="text-xs font-semibold text-emerald-400">Online</span>
+                    </div>
+                    <div id="badge-xray-container" class="flex items-center gap-2">
+                        <span class="text-[10px] font-mono px-2.5 py-1 rounded-full gold-badge font-bold">
+                            LoadBalance Active
+                        </span>
+                    </div>
                 </div>
                 
                 <h2 class="text-xl font-extrabold text-white tracking-wide flex items-center gap-2">
-                    CASSANOVA STUDIO (XRAY)
+                    🛠️ CASSANOVA STUDIO (XRAY)
                 </h2>
                 
                 <p class="text-xs text-slate-400 leading-relaxed">
@@ -245,24 +300,29 @@
                 </div>
             </div>
 
-            <a href="https://xray-studio.cassanova.my.id" target="_blank" rel="noopener" 
+            <a href="https://xray-studio.cassanova.my.id" target="_blank" rel="noopener" onclick="recordVisit('xray')"
                class="btn-gold-3d w-full py-3 rounded-xl font-extrabold text-xs text-slate-950 uppercase tracking-wider flex items-center justify-center gap-2">
                 <i class="fa-solid fa-wand-magic-sparkles"></i> Buka Xray Studio
             </a>
         </div>
 
         <!-- CARD POSITION 4 (REPO 1: MULTI-PROTOCOL CONVERTER) -->
-        <div class="glass-card-3d gloss-effect rounded-2xl p-6 flex flex-col justify-between space-y-5">
+        <div id="card-multi" class="glass-card-3d gloss-effect rounded-2xl p-6 flex flex-col justify-between space-y-5">
             <div class="space-y-3">
                 <div class="flex items-center justify-between">
-                    <span class="text-2xl">🌐</span>
-                    <span class="text-[10px] font-mono px-2.5 py-1 rounded-full gold-badge font-bold">
-                        Universal Base64
-                    </span>
+                    <div class="flex items-center gap-2">
+                        <span class="status-dot"></span>
+                        <span class="text-xs font-semibold text-emerald-400">Online</span>
+                    </div>
+                    <div id="badge-multi-container" class="flex items-center gap-2">
+                        <span class="text-[10px] font-mono px-2.5 py-1 rounded-full gold-badge font-bold">
+                            Universal Base64
+                        </span>
+                    </div>
                 </div>
                 
                 <h2 class="text-xl font-extrabold text-white tracking-wide flex items-center gap-2">
-                    MULTI-PROTOCOL CONVERTER
+                    🌐 MULTI-PROTOCOL CONVERTER
                 </h2>
                 
                 <p class="text-xs text-slate-400 leading-relaxed">
@@ -276,13 +336,57 @@
                 </div>
             </div>
 
-            <a href="https://multi.cassanova.my.id" target="_blank" rel="noopener" 
+            <a href="https://multi.cassanova.my.id/" target="_blank" rel="noopener" onclick="recordVisit('multi')"
                class="btn-gold-3d w-full py-3 rounded-xl font-extrabold text-xs text-slate-950 uppercase tracking-wider flex items-center justify-center gap-2">
                 <i class="fa-solid fa-link"></i> Buka Multi-Protocol
             </a>
         </div>
 
     </main>
+
+    <!-- QUICK DECODER MODAL (Toolbox Tambahan) -->
+    <div id="decoderModal" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-gradient-to-b from-slate-900 to-slate-950 border border-amber-500/30 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="text-base font-extrabold text-amber-400 flex items-center gap-2">
+                    <i class="fa-solid fa-code"></i> Quick Base64 & URL Decoder
+                </h3>
+                <button onclick="closeDecoderModal()" class="text-slate-400 hover:text-white text-lg font-bold">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Tempel Teks Terenkode (Base64 / URL)</label>
+                    <textarea id="decoderInput" rows="3" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs font-mono text-slate-200 focus:outline-none focus:border-amber-500/60" placeholder="Tempel teks Base64 atau URL terenkode di sini..."></textarea>
+                </div>
+
+                <div class="flex gap-2">
+                    <button onclick="processDecode('base64')" class="flex-1 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 font-bold text-xs py-2 rounded-lg transition">
+                        Decode Base64
+                    </button>
+                    <button onclick="processDecode('url')" class="flex-1 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 font-bold text-xs py-2 rounded-lg transition">
+                        Decode URL
+                    </button>
+                    <button onclick="clearDecoder()" class="px-3 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold rounded-lg transition">
+                        Reset
+                    </button>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Hasil Dekode Teks Mentah</label>
+                    <textarea id="decoderOutput" rows="4" readonly class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs font-mono text-emerald-400 focus:outline-none" placeholder="Hasil dekode akan muncul di sini..."></textarea>
+                </div>
+            </div>
+
+            <div class="pt-2 text-right">
+                <button onclick="closeDecoderModal()" class="px-5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-xl border border-slate-700">
+                    Tutup Modal
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer Section -->
     <footer class="w-full text-center pt-8 pb-4">
@@ -291,5 +395,86 @@
         </p>
     </footer>
 
+    <!-- Client-Side Interactive Scripts -->
+    <script>
+        // Track visited converter to local storage
+        function recordVisit(converterId) {
+            try {
+                localStorage.setItem('cassanova_last_visited', converterId);
+            } catch (e) {
+                console.warn('LocalStorage error:', e);
+            }
+        }
+
+        // Highlight last visited card on page load
+        function applyLastVisitedHighlight() {
+            try {
+                const lastVisited = localStorage.getItem('cassanova_last_visited');
+                if (!lastVisited) return;
+
+                const targetCard = document.getElementById(`card-${lastVisited}`);
+                const targetContainer = document.getElementById(`badge-${lastVisited}-container`);
+
+                if (targetCard && targetContainer) {
+                    targetCard.classList.add('glass-card-active');
+                    
+                    const lastBadge = document.createElement('span');
+                    lastBadge.className = 'text-[10px] font-extrabold px-2.5 py-0.5 rounded-full last-used-badge flex items-center gap-1';
+                    lastBadge.innerHTML = '<i class="fa-solid fa-star text-amber-300 text-[9px]"></i> Terakhir Dibuka';
+                    
+                    targetContainer.prepend(lastBadge);
+                }
+            } catch (e) {
+                console.warn('Error reading LocalStorage:', e);
+            }
+        }
+
+        // Quick Decoder Tool Functions
+        function openDecoderModal() {
+            document.getElementById('decoderModal').classList.remove('hidden');
+        }
+
+        function closeDecoderModal() {
+            document.getElementById('decoderModal').classList.add('hidden');
+        }
+
+        function clearDecoder() {
+            document.getElementById('decoderInput').value = '';
+            document.getElementById('decoderOutput').value = '';
+        }
+
+        function safeUtf8Base64Decode(str) {
+            try {
+                str = str.replace(/-/g, '+').replace(/_/g, '/');
+                while (str.length % 4) str += '=';
+                return decodeURIComponent(atob(str).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+            } catch (e) {
+                return atob(str);
+            }
+        }
+
+        function processDecode(mode) {
+            const raw = document.getElementById('decoderInput').value.trim();
+            const outputEl = document.getElementById('decoderOutput');
+            
+            if (!raw) {
+                outputEl.value = 'Silakan tempel teks terenkode terlebih dahulu!';
+                return;
+            }
+
+            try {
+                if (mode === 'base64') {
+                    outputEl.value = safeUtf8Base64Decode(raw);
+                } else if (mode === 'url') {
+                    outputEl.value = decodeURIComponent(raw);
+                }
+            } catch (err) {
+                outputEl.value = 'Gagal mendekode teks! Pastikan format input benar.';
+            }
+        }
+
+        // Run highlight check on load
+        window.addEventListener('DOMContentLoaded', applyLastVisitedHighlight);
+    </script>
 </body>
 </html>
