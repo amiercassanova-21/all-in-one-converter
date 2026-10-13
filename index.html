@@ -3,569 +3,447 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SubConverter Suite — convert.cassanova.my.id</title>
-    
-    <!-- Tailwind CSS CDN -->
+    <title>Multi-Protocol Converter Suite - convert.cassanova.my.id</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            50: '#eef2ff',
-                            100: '#e0e7ff',
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            700: '#4338ca',
-                            900: '#312e81',
-                        },
                         darkbg: '#0b0f19',
                         cardbg: '#111827',
-                        borderbg: '#1f2937'
+                        bordercolor: '#1f2937',
+                        accent: '#6366f1',
+                        accenthover: '#4f46e5'
                     }
                 }
             }
         }
     </script>
-
-    <!-- FontAwesome & QRCode Library -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    
     <style>
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0b0f19;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1f2937;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #374151;
-        }
-        .glass-panel {
-            background: rgba(17, 24, 39, 0.85);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
+        body { background-color: #0b0f19; color: #f3f4f6; font-family: system-ui, -apple-system, sans-serif; }
+        .tab-btn.active { background-color: #6366f1; color: #ffffff; border-color: #6366f1; }
+        pre { white-space: pre-wrap; word-break: break-all; }
     </style>
 </head>
-<body class="bg-darkbg text-slate-200 min-h-screen flex flex-col font-sans antialiased">
+<body class="min-h-screen pb-12">
 
-    <!-- Top Navigation Bar -->
-    <header class="border-b border-slate-800 glass-panel sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <!-- Header -->
+    <header class="border-b border-gray-800 bg-gray-900/50 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-400 flex items-center justify-center shadow-lg shadow-brand-500/20">
-                    <i class="fa-solid fa-network-wired text-white text-lg"></i>
-                </div>
+                <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center font-bold text-xl shadow-lg shadow-indigo-500/30">⚡</div>
                 <div>
-                    <h1 class="font-bold text-lg text-white leading-tight flex items-center gap-2">
-                        SubConverter Suite
-                        <span class="text-xs font-normal px-2 py-0.5 rounded-full bg-brand-500/20 text-brand-300 border border-brand-500/30">v2.5 Full Power</span>
-                    </h1>
-                    <p class="text-xs text-slate-400">Powered by <span class="text-brand-400 font-mono">convert.cassanova.my.id</span></p>
+                    <h1 class="font-bold text-lg leading-tight">SubConverter Suite <span class="text-xs px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-400 font-semibold border border-indigo-500/30">v3.0 All-in-One</span></h1>
+                    <p class="text-xs text-gray-400">Powered by convert.cassanova.my.id</p>
                 </div>
             </div>
-            
-            <div class="flex items-center space-x-3">
-                <a href="https://github.com/amiercassanova-21/all-in-one-converter" target="_blank" rel="noopener" class="text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition flex items-center gap-2">
-                    <i class="fa-brands fa-github text-sm"></i>
-                    <span class="hidden sm:inline">GitHub Repo</span>
-                </a>
-            </div>
+            <a href="https://github.com/amiercassanova-21/all-in-one-converter" target="_blank" class="text-gray-400 hover:text-white transition">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            </a>
         </div>
     </header>
 
-    <!-- Main Content Area -->
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
-        
-        <!-- LEFT COLUMN: Input & Advanced Settings (6 Cols) -->
-        <section class="lg:col-span-6 flex flex-col space-y-6">
-            
-            <!-- Step 1: Input Links -->
-            <div class="bg-cardbg rounded-2xl p-5 border border-slate-800 shadow-xl space-y-3">
-                <div class="flex items-center justify-between">
-                    <label for="inputProxies" class="text-sm font-semibold text-white flex items-center gap-2">
-                        <span class="w-6 h-6 rounded-full bg-brand-600/30 text-brand-400 text-xs flex items-center justify-center font-bold">1</span>
-                        Tempel Link Proxy / Subscription
-                    </label>
-                    <button id="btnClearInput" class="text-xs text-slate-400 hover:text-rose-400 transition flex items-center gap-1">
-                        <i class="fa-solid fa-trash-can"></i> Bersihkan
-                    </button>
-                </div>
-                
-                <textarea id="inputProxies" rows="6" 
-                    class="w-full bg-slate-900/90 border border-slate-800 rounded-xl p-3 text-xs font-mono text-slate-200 focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition placeholder-slate-600 resize-none"
-                    placeholder="Dukungan: vless://, vmess://, trojan://, ss:// atau Base64...&#10;Dapat memasukkan banyak baris sekaligus."></textarea>
-                
-                <div class="flex items-center justify-between text-xs text-slate-400">
-                    <span id="detectedNodesCount"><i class="fa-solid fa-cubes text-brand-400 mr-1"></i> Terdeteksi: 0 node</span>
-                    <button id="btnSampleData" class="text-brand-400 hover:underline">Gunakan Contoh Proxy</button>
+    <main class="max-w-5xl mx-auto px-4 mt-8 space-y-6">
+
+        <!-- 1. Input Section -->
+        <section class="bg-cardbg border border-bordercolor rounded-2xl p-6 shadow-xl">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="font-bold text-gray-200 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 text-xs flex items-center justify-center">1</span>
+                    LINK AKUN / SUBSCRIPTION
+                </h2>
+                <div class="flex gap-2">
+                    <button onclick="pasteClipboard()" class="text-xs bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-1.5 rounded-lg border border-gray-700 transition">📋 Tempel</button>
+                    <button onclick="clearInput()" class="text-xs bg-gray-800 hover:bg-red-900/40 text-red-400 px-3 py-1.5 rounded-lg border border-gray-700 transition">🗑️ Bersihkan</button>
                 </div>
             </div>
+            <textarea id="rawInput" rows="5" class="w-full bg-gray-950 border border-gray-800 rounded-xl p-4 text-sm font-mono text-gray-200 focus:outline-none focus:border-indigo-500 transition" placeholder="Tempel link vless://, vmess://, trojan://, ss:// atau link subscription Base64 di sini (satu link per baris)..."></textarea>
+            <p class="text-xs text-gray-500 mt-2">Mendukung banyak akun sekaligus atau masukan mentah format Base64.</p>
+        </section>
 
-            <!-- Global Modifier & Node Filter Section -->
-            <div class="bg-cardbg rounded-2xl p-5 border border-slate-800 shadow-xl space-y-3">
-                <div class="flex items-center justify-between cursor-pointer" id="toggleGlobalModifier">
-                    <h2 class="text-sm font-semibold text-white flex items-center gap-2">
-                        <span class="w-6 h-6 rounded-full bg-indigo-600/30 text-indigo-400 text-xs flex items-center justify-center font-bold"><i class="fa-solid fa-wand-magic"></i></span>
-                        Filter Node & Bug SNI Modifier
-                    </h2>
-                    <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200" id="globalModifierIcon"></i>
-                </div>
-
-                <div id="globalModifierContent" class="hidden space-y-3 pt-2 text-xs border-t border-slate-800/80">
+        <!-- 2. Global Node Modifiers (Filter & Bug SNI Massal) -->
+        <section class="bg-cardbg border border-bordercolor rounded-2xl p-6 shadow-xl">
+            <details class="group">
+                <summary class="flex justify-between items-center cursor-pointer font-bold text-gray-200 list-none">
+                    <span class="flex items-center gap-2">
+                        <span class="text-indigo-400">⚙️</span> FILTER NODE & PENGGANTI BUG SNI MASSAL
+                    </span>
+                    <span class="transition group-open:rotate-180 text-gray-400">▼</span>
+                </summary>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 pt-4 border-t border-gray-800 text-sm">
                     <div>
-                        <label class="text-slate-300 block mb-1">Ganti SNI / Bug Host Massal (Opsional):</label>
-                        <input type="text" id="globalSniOverride" placeholder="Contoh: quiz.vidio.com" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-slate-200 outline-none focus:border-brand-500">
-                        <span class="text-[10px] text-slate-500">Akan mengganti SNI / ServerName pada semua node proxy yang diproses.</span>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1">Ganti SNI / Host Massal</label>
+                        <input type="text" id="globalSni" placeholder="contoh: quiz.vidio.com" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-xs text-gray-200 focus:border-indigo-500 focus:outline-none">
                     </div>
-                    
-                    <div class="grid grid-cols-2 gap-2">
-                        <div>
-                            <label class="text-slate-300 block mb-1">Sertakan Node (Include):</label>
-                            <input type="text" id="filterInclude" placeholder="Misal: SG, ID, VIP" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-slate-200 outline-none focus:border-brand-500">
-                        </div>
-                        <div>
-                            <label class="text-slate-300 block mb-1">Kecualikan Node (Exclude):</label>
-                            <input type="text" id="filterExclude" placeholder="Misal: EXPIRED, TEST" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-slate-200 outline-none focus:border-brand-500">
-                        </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1">Filter Kata Kunci Termasuk (Include)</label>
+                        <input type="text" id="filterInclude" placeholder="contoh: SG, VIP (Pisahkan koma)" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-xs text-gray-200 focus:border-indigo-500 focus:outline-none">
                     </div>
-
-                    <div class="flex items-center space-x-2 pt-1">
-                        <input type="checkbox" id="chkDeduplicate" class="rounded bg-slate-800 border-slate-700 text-brand-600 focus:ring-brand-500">
-                        <label for="chkDeduplicate" class="text-slate-300">Hapus Node Duplikat Otomatis</label>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1">Filter Kata Kunci Buang (Exclude)</label>
+                        <input type="text" id="filterExclude" placeholder="contoh: EXPIRED, TEST (Pisahkan koma)" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-xs text-gray-200 focus:border-indigo-500 focus:outline-none">
+                    </div>
+                    <div class="flex items-end">
+                        <label class="flex items-center space-x-2 text-xs text-gray-300 cursor-pointer mb-2">
+                            <input type="checkbox" id="dedupeNodes" checked class="rounded bg-gray-900 border-gray-700 text-indigo-600 focus:ring-0">
+                            <span>Hapus Node Duplikat Otomatis</span>
+                        </label>
                     </div>
                 </div>
-            </div>
+            </details>
+        </section>
 
-            <!-- Step 2: Target Format Selector -->
-            <div class="bg-cardbg rounded-2xl p-5 border border-slate-800 shadow-xl space-y-4">
-                <label class="text-sm font-semibold text-white flex items-center gap-2">
-                    <span class="w-6 h-6 rounded-full bg-brand-600/30 text-brand-400 text-xs flex items-center justify-center font-bold">2</span>
-                    Pilih Format Target Konversi
-                </label>
+        <!-- 3. Target Format Selector & Contextual Settings -->
+        <section class="bg-cardbg border border-bordercolor rounded-2xl p-6 shadow-xl">
+            <h2 class="font-bold text-gray-200 mb-4 flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 text-xs flex items-center justify-center">2</span>
+                PILIH FORMAT TARGET KONVERSI
+            </h2>
 
-                <!-- Format Tab Selector Buttons -->
-                <div class="grid grid-cols-2 gap-2 p-1 bg-slate-900 rounded-xl border border-slate-800" id="formatTabGroup">
-                    <button data-format="clash" class="tab-btn px-3 py-2 rounded-lg text-xs font-medium text-white bg-brand-600 shadow transition flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-fire text-amber-400"></i> Clash (YAML)
-                    </button>
-                    <button data-format="singbox" class="tab-btn px-3 py-2 rounded-lg text-xs font-medium text-slate-400 hover:text-white transition flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-box text-emerald-400"></i> Sing-Box (JSON)
-                    </button>
-                    <button data-format="xray" class="tab-btn px-3 py-2 rounded-lg text-xs font-medium text-slate-400 hover:text-white transition flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-bolt text-sky-400"></i> Xray Config (JSON)
-                    </button>
-                    <button data-format="base64" class="tab-btn px-3 py-2 rounded-lg text-xs font-medium text-slate-400 hover:text-white transition flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-code text-purple-400"></i> Raw Base64
-                    </button>
-                </div>
-
-                <!-- FULL POWER SING-BOX OPTIONS PANEL -->
-                <div id="singboxSettings" class="context-panel hidden bg-slate-900/80 rounded-xl p-4 border border-slate-800/80 space-y-4">
-                    <h3 class="text-xs font-semibold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-800 pb-2">
-                        <i class="fa-solid fa-sliders"></i> Pengaturan Lengkap Sing-Box
-                    </h3>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                        <div>
-                            <label class="text-slate-300 block mb-1">Inbound Mode:</label>
-                            <select id="sbInboundMode" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-slate-200 outline-none focus:border-brand-500">
-                                <option value="mixed">Mixed Port (Proxy Mode - Port 2080)</option>
-                                <option value="tun">TUN Mode (Auto Route Traffic)</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="text-slate-300 block mb-1">DNS Strategy:</label>
-                            <select id="sbDnsStrategy" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-slate-200 outline-none focus:border-brand-500">
-                                <option value="prefer_ipv4">prefer_ipv4 (Disarankan)</option>
-                                <option value="ipv4_only">ipv4_only</option>
-                                <option value="prefer_ipv6">prefer_ipv6</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="text-slate-300 block mb-1">Remote DNS Server:</label>
-                            <select id="sbRemoteDns" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-slate-200 outline-none focus:border-brand-500">
-                                <option value="https://1.1.1.1/dns-query">Cloudflare DoH (1.1.1.1)</option>
-                                <option value="https://dns.google/dns-query">Google DoH (8.8.8.8)</option>
-                                <option value="https://dns.adguard.com/dns-query">AdGuard DoH (Adblock DNS)</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="text-slate-300 block mb-1">Fitur Mux (Multiplexing):</label>
-                            <select id="sbEnableMux" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-slate-200 outline-none focus:border-brand-500">
-                                <option value="false">Nonaktif (Disabled)</option>
-                                <option value="true">Aktif (Enabled)</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="text-xs space-y-2">
-                        <label class="text-slate-300 block">Preset Ruleset & Routing:</label>
-                        <select id="sbRulesetPreset" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-slate-200 outline-none focus:border-brand-500">
-                            <option value="adblock_indo">Adblock + Indo Direct + Auto Proxy</option>
-                            <option value="bypass_lan">Bypass LAN & Direct Indo Only</option>
-                            <option value="full_proxy">Full Proxy Mode</option>
-                        </select>
-                    </div>
-
-                    <div class="text-xs space-y-1">
-                        <label class="text-slate-300 block">Custom Direct Domains (Dipisahkan koma):</label>
-                        <input type="text" id="sbCustomDirectDomains" placeholder="whatsapp.com, bca.co.id, bankneocommerce.co.id" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-slate-200 outline-none focus:border-brand-500">
-                    </div>
-
-                    <div class="flex items-center justify-between text-xs pt-1">
-                        <label class="text-slate-300">Clash API Controller:</label>
-                        <select id="sbClashApi" class="bg-slate-800 border border-slate-700 rounded-lg px-2 py-1 text-slate-200 outline-none">
-                            <option value="true">Aktif (Port 9090)</option>
-                            <option value="false">Nonaktif</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- FULL POWER CLASH / MIHOMO OPTIONS PANEL -->
-                <div id="clashSettings" class="context-panel bg-slate-900/80 rounded-xl p-4 border border-slate-800/80 space-y-4">
-                    <h3 class="text-xs font-semibold text-amber-400 uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-800 pb-2">
-                        <i class="fa-solid fa-sliders"></i> Pengaturan Lengkap Clash / Mihomo
-                    </h3>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                        <div>
-                            <label class="text-slate-300 block mb-1">Tipe Target Core:</label>
-                            <select id="clashCoreType" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-slate-200 outline-none focus:border-brand-500">
-                                <option value="meta">Clash Meta / Mihomo (Rekomendasi VLESS/Hysteria)</option>
-                                <option value="standard">Clash Premium / Standard</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="text-slate-300 block mb-1">Mode Operasi:</label>
-                            <select id="clashMode" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-slate-200 outline-none focus:border-brand-500">
-                                <option value="rule">Rule Mode</option>
-                                <option value="global">Global Mode</option>
-                                <option value="direct">Direct Mode</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="text-slate-300 block mb-1">Mode TUN Virtual Adapter:</label>
-                            <select id="clashTun" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-slate-200 outline-none focus:border-brand-500">
-                                <option value="false">Nonaktif (Proxy Only)</option>
-                                <option value="true">Aktifkan Mode TUN</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="text-slate-300 block mb-1">TUN Stack Type:</label>
-                            <select id="clashTunStack" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-slate-200 outline-none focus:border-brand-500">
-                                <option value="system">System Stack</option>
-                                <option value="gvisor">gVisor Stack</option>
-                                <option value="lwip">LwIP Stack</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="text-xs space-y-2">
-                        <label class="text-slate-300 block">Proxy Grouping & Selection Strategy:</label>
-                        <div class="grid grid-cols-2 gap-2">
-                            <label class="flex items-center space-x-2 bg-slate-800 p-2 rounded-lg border border-slate-700 cursor-pointer">
-                                <input type="checkbox" id="chkGroupAuto" checked class="rounded text-brand-600">
-                                <span class="text-slate-200">Sertakan Group AUTO (Ping Test)</span>
-                            </label>
-                            <label class="flex items-center space-x-2 bg-slate-800 p-2 rounded-lg border border-slate-700 cursor-pointer">
-                                <input type="checkbox" id="chkGroupFallback" checked class="rounded text-brand-600">
-                                <span class="text-slate-200">Sertakan Group FALLBACK</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="text-xs space-y-1">
-                        <label class="text-slate-300 block">Preset Ruleset:</label>
-                        <select id="clashRulePreset" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-slate-200 outline-none focus:border-brand-500">
-                            <option value="standard">Standard (Adblock + Indo Direct + Match Proxy)</option>
-                            <option value="minimal">Minimal (LAN Direct + Match Proxy)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- FULL POWER XRAY STUDIO OPTIONS PANEL -->
-                <div id="xraySettings" class="context-panel hidden bg-slate-900/80 rounded-xl p-4 border border-slate-800/80 space-y-4">
-                    <h3 class="text-xs font-semibold text-sky-400 uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-800 pb-2">
-                        <i class="fa-solid fa-sliders"></i> Pengaturan Lengkap Xray Studio
-                    </h3>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                        <div>
-                            <label class="text-slate-300 block mb-1">Inbound Protocol & Port:</label>
-                            <select id="xrayInboundProtocol" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-slate-200 outline-none focus:border-brand-500">
-                                <option value="socks">SOCKS5 (Port 10808)</option>
-                                <option value="http">HTTP Proxy (Port 10809)</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="text-slate-300 block mb-1">Traffic Sniffing:</label>
-                            <select id="xraySniffing" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-slate-200 outline-none focus:border-brand-500">
-                                <option value="true">Aktifkan Sniffing (HTTP, TLS, QUIC)</option>
-                                <option value="false">Nonaktifkan Sniffing</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="text-xs space-y-1">
-                        <label class="text-slate-300 block">GeoIP & Routing Strategy:</label>
-                        <select id="xrayRoutingStrategy" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-slate-200 outline-none focus:border-brand-500">
-                            <option value="bypass_private">Bypass Private IP & Direct Indo</option>
-                            <option value="global_proxy">Full Global Routing via Proxy</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Action Convert Button -->
-                <button id="btnConvert" class="w-full py-3.5 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-semibold rounded-xl shadow-lg shadow-brand-500/25 transition transform active:scale-[0.99] flex items-center justify-center gap-2 text-sm">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Konversi Sekarang
+            <!-- Format Tabs -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                <button onclick="switchTab('singbox')" id="tab-singbox" class="tab-btn active border border-gray-800 bg-gray-900/80 hover:bg-gray-800 p-3 rounded-xl font-semibold text-sm transition flex items-center justify-center gap-2">
+                    📦 Sing-Box (JSON)
+                </button>
+                <button onclick="switchTab('clash')" id="tab-clash" class="tab-btn border border-gray-800 bg-gray-900/80 hover:bg-gray-800 p-3 rounded-xl font-semibold text-sm transition flex items-center justify-center gap-2">
+                    🔥 Clash (YAML)
+                </button>
+                <button onclick="switchTab('xray')" id="tab-xray" class="tab-btn border border-gray-800 bg-gray-900/80 hover:bg-gray-800 p-3 rounded-xl font-semibold text-sm transition flex items-center justify-center gap-2">
+                    🛠️ Xray Config (JSON)
+                </button>
+                <button onclick="switchTab('raw')" id="tab-raw" class="tab-btn border border-gray-800 bg-gray-900/80 hover:bg-gray-800 p-3 rounded-xl font-semibold text-sm transition flex items-center justify-center gap-2">
+                    🔗 Raw Base64
                 </button>
             </div>
-        </section>
 
-        <!-- RIGHT COLUMN: Output Preview & Actions (6 Cols) -->
-        <section class="lg:col-span-6 flex flex-col space-y-4">
-            <div class="bg-cardbg rounded-2xl p-5 border border-slate-800 shadow-xl flex-1 flex flex-col space-y-4 min-h-[500px]">
+            <!-- CONTEXTUAL FORM: Sing-Box (100% Match singbox.cassanova.my.id) -->
+            <div id="form-singbox" class="space-y-4 pt-4 border-t border-gray-800">
+                <div class="p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-xs text-indigo-300 font-semibold mb-2">
+                    ⚙️ PENGATURAN KHUSUS SING-BOX (ASLI SINGBOX-CONVERTER)
+                </div>
                 
-                <!-- Output Header & Quick Actions -->
-                <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
-                    <div class="flex items-center space-x-2">
-                        <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
-                        <h2 class="text-sm font-semibold text-white">Hasil Konversi Live</h2>
-                        <span id="outputFormatBadge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">CLASH (YAML)</span>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1">Versi aplikasi</label>
+                        <select id="sbVersion" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-xs text-gray-200 focus:border-indigo-500 focus:outline-none">
+                            <option value="ref1nd">reF1nd 1.14 (Build pihak ketiga, mesin sing-box 1.14)</option>
+                            <option value="official_110">Official Sing-Box 1.10+</option>
+                            <option value="official_109">Official Sing-Box 1.9</option>
+                        </select>
+                        <p class="text-[10px] text-gray-500 mt-1">Build pihak ketiga reF1nd, mesin sing-box 1.14.</p>
                     </div>
 
-                    <div class="flex items-center space-x-2">
-                        <button id="btnCopyOutput" class="px-3 py-1.5 rounded-lg bg-brand-600/20 hover:bg-brand-600 text-brand-300 hover:text-white border border-brand-500/30 text-xs font-medium transition flex items-center gap-1.5">
-                            <i class="fa-regular fa-copy"></i> Salin
-                        </button>
-                        <button id="btnDownloadOutput" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-medium transition flex items-center gap-1.5">
-                            <i class="fa-solid fa-download"></i> Unduh File
-                        </button>
-                        <button id="btnShowQr" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-medium transition flex items-center gap-1.5">
-                            <i class="fa-solid fa-qrcode"></i> QR Code
-                        </button>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1">Tampilan dashboard</label>
+                        <select id="sbDashboard" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-xs text-gray-200 focus:border-indigo-500 focus:outline-none">
+                            <option value="metacubexd">metacubexd</option>
+                            <option value="yacd">yacd</option>
+                            <option value="zboard">zboard</option>
+                        </select>
+                        <p class="text-[10px] text-gray-500 mt-1">File diunduh otomatis. Buka di http://127.0.0.40:9090/ui saat VPN nyala.</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1">Jumlah grup auto</label>
+                        <select id="sbAutoGroups" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-xs text-gray-200 focus:border-indigo-500 focus:outline-none">
+                            <option value="1">1 grup</option>
+                            <option value="2">2 grup</option>
+                            <option value="3">3 grup</option>
+                        </select>
+                        <p class="text-[10px] text-gray-500 mt-1">Semua akun bersaingan dalam satu grup.</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1">Kecepatan cek server</label>
+                        <select id="sbCheckSpeed" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-xs text-gray-200 focus:border-indigo-500 focus:outline-none">
+                            <option value="1m">1 menit</option>
+                            <option value="30s">30 detik</option>
+                            <option value="3m">3 menit</option>
+                            <option value="5m">5 menit</option>
+                        </select>
+                        <p class="text-[10px] text-gray-500 mt-1">Seimbang untuk akun sedikit.</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1">Blokir QUIC</label>
+                        <select id="sbBlockQuic" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-xs text-gray-200 focus:border-indigo-500 focus:outline-none">
+                            <option value="video">Hanya aplikasi video — disarankan</option>
+                            <option value="all">Blokir Semua QUIC</option>
+                            <option value="none">Jangan Blokir</option>
+                        </select>
+                        <p class="text-[10px] text-gray-500 mt-1">YouTube, TikTok, dan Instagram dipaksa lewat tunnel supaya kuota utama tidak terpakai.</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1">Bendera bawaan</label>
+                        <select id="sbFlag" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-xs text-gray-200 focus:border-indigo-500 focus:outline-none">
+                            <option value="none">Tanpa bendera</option>
+                            <option value="emoji">Dengan bendera emoji</option>
+                        </select>
+                        <p class="text-[10px] text-gray-500 mt-1">Akun yang lokasinya tak terbaca dibiarkan polos.</p>
                     </div>
                 </div>
 
-                <!-- Output Code Area -->
-                <div class="relative flex-1 bg-slate-950 rounded-xl border border-slate-800/80 overflow-hidden flex flex-col">
-                    <textarea id="outputResult" readonly 
-                        class="w-full h-full p-4 bg-transparent font-mono text-xs text-slate-300 outline-none resize-none overflow-y-auto leading-relaxed"
-                        placeholder="Hasil konfigurasi akan tampil di sini setelah Anda mengklik 'Generate Konversi'..."></textarea>
-                </div>
+                <div class="space-y-2 pt-2 text-xs">
+                    <label class="flex items-center space-x-2 text-gray-300 cursor-pointer">
+                        <input type="checkbox" id="sbSplitGroups" checked class="rounded bg-gray-900 border-gray-700 text-indigo-600 focus:ring-0">
+                        <div>
+                            <span class="font-semibold block">Bagi akun ke beberapa grup</span>
+                            <span class="text-[10px] text-gray-500 block">Akun disebar ke Primary, Backup, Tertiary.</span>
+                        </div>
+                    </label>
 
-                <div class="flex items-center justify-between text-[11px] text-slate-500 font-mono">
-                    <span id="outputStats">Baris: 0 | Ukuran: 0 KB</span>
-                    <span>Status: Ready</span>
+                    <label class="flex items-center space-x-2 text-gray-300 cursor-pointer">
+                        <input type="checkbox" id="sbSplitProto" class="rounded bg-gray-900 border-gray-700 text-indigo-600 focus:ring-0">
+                        <div>
+                            <span class="font-semibold block">Pisahkan grup per protokol</span>
+                            <span class="text-[10px] text-gray-500 block">Semua protokol dicampur dalam satu grup jika tidak dicentang.</span>
+                        </div>
+                    </label>
+
+                    <label class="flex items-center space-x-2 text-gray-300 cursor-pointer">
+                        <input type="checkbox" id="sbBypassWA" checked class="rounded bg-gray-900 border-gray-700 text-indigo-600 focus:ring-0">
+                        <div>
+                            <span class="font-semibold block">WhatsApp jalur langsung</span>
+                            <span class="text-[10px] text-gray-500 block">WhatsApp keluar dari tunnel, chat dan telepon lancar.</span>
+                        </div>
+                    </label>
+
+                    <label class="flex items-center space-x-2 text-gray-300 cursor-pointer">
+                        <input type="checkbox" id="sbInsecure" class="rounded bg-gray-900 border-gray-700 text-indigo-600 focus:ring-0">
+                        <div>
+                            <span class="font-semibold block">Lewati verifikasi sertifikat</span>
+                            <span class="text-[10px] text-gray-500 block">Sertifikat diperiksa ketat. Kalau akun gagal connect, centang lagi.</span>
+                        </div>
+                    </label>
                 </div>
             </div>
+
+            <!-- CONTEXTUAL FORM: Clash (Asli Clash-Converter) -->
+            <div id="form-clash" class="space-y-4 pt-4 border-t border-gray-800 hidden">
+                <div class="p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-xs text-indigo-300 font-semibold mb-2">
+                    ⚙️ PENGATURAN KHUSUS CLASH / MIHOMO
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1">Clash Core Target</label>
+                        <select id="clashCore" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-xs text-gray-200 focus:border-indigo-500 focus:outline-none">
+                            <option value="meta">Clash Meta / Mihomo (Rekomendasi - Hy2/TUIC/Reality)</option>
+                            <option value="std">Clash Standard</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1">Mode Operasi</label>
+                        <select id="clashMode" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-xs text-gray-200 focus:border-indigo-500 focus:outline-none">
+                            <option value="rule">Rule (Sesuai Aturan Routing)</option>
+                            <option value="global">Global (Paksa Semua Lewat Proxy)</option>
+                            <option value="direct">Direct (Tanpa Proxy)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1">TUN Mode</label>
+                        <select id="clashTun" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-xs text-gray-200 focus:border-indigo-500 focus:outline-none">
+                            <option value="enable">Aktif (System Stack)</option>
+                            <option value="gvisor">Aktif (gVisor Stack)</option>
+                            <option value="disable">Nonaktif</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1">Preset Ruleset</label>
+                        <select id="clashRuleset" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-xs text-gray-200 focus:border-indigo-500 focus:outline-none">
+                            <option value="full">Adblock + Indo Direct + Gaming + Torrent Block</option>
+                            <option value="minimal">Minimalis (Direct Indo IP saja)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTEXTUAL FORM: Xray Studio (Asli Xray-studio) -->
+            <div id="form-xray" class="space-y-4 pt-4 border-t border-gray-800 hidden">
+                <div class="p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-xs text-indigo-300 font-semibold mb-2">
+                    ⚙️ PENGATURAN KHUSUS XRAY STUDIO CORE
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1">Inbound Protocol</label>
+                        <select id="xrayInbound" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-xs text-gray-200 focus:border-indigo-500 focus:outline-none">
+                            <option value="socks_http">SOCKS5 (10808) + HTTP (10809)</option>
+                            <option value="socks">SOCKS5 Only (Port 10808)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1">Sniffing Traffic</label>
+                        <select id="xraySniffing" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-xs text-gray-200 focus:border-indigo-500 focus:outline-none">
+                            <option value="on">Aktifkan Sniffing (HTTP, TLS, QUIC)</option>
+                            <option value="off">Nonaktifkan Sniffing</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTEXTUAL FORM: Raw -->
+            <div id="form-raw" class="space-y-4 pt-4 border-t border-gray-800 hidden">
+                <p class="text-xs text-gray-400">Format Raw Base64 akan menggabungkan seluruh link proxy yang telah difilter ke dalam satu string Base64 tunggal untuk dijadikan link langganan standar v2ray/v2rayNG.</p>
+            </div>
+
+            <button onclick="generateConfig()" class="w-full mt-6 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-indigo-600/30 transition flex items-center justify-center gap-2">
+                🚀 Generate Konversi Sekarang
+            </button>
         </section>
+
+        <!-- 4. Output Section -->
+        <section id="outputSection" class="bg-cardbg border border-bordercolor rounded-2xl p-6 shadow-xl hidden">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
+                <h2 class="font-bold text-gray-200 flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span>
+                    HASIL KONVERSI LIVE
+                </h2>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="copyOutput()" class="text-xs bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-4 py-2 rounded-lg transition">📋 Salin Teks</button>
+                    <button onclick="downloadOutput()" class="text-xs bg-gray-800 hover:bg-gray-700 text-gray-200 font-semibold px-4 py-2 rounded-lg border border-gray-700 transition">💾 Unduh File</button>
+                    <button onclick="showQrCode()" class="text-xs bg-gray-800 hover:bg-gray-700 text-gray-200 font-semibold px-4 py-2 rounded-lg border border-gray-700 transition">📱 Tampilkan QR Code</button>
+                </div>
+            </div>
+
+            <pre id="outputResult" class="bg-gray-950 border border-gray-800 rounded-xl p-4 text-xs font-mono text-gray-300 max-h-[500px] overflow-y-auto"></pre>
+        </section>
+
     </main>
 
-    <!-- QR Code Modal -->
-    <div id="qrModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-cardbg border border-slate-800 rounded-2xl p-6 max-w-sm w-full space-y-4 text-center shadow-2xl">
-            <h3 class="text-sm font-semibold text-white">QR Code Subscription / Config</h3>
-            <div id="qrcode" class="p-3 bg-white rounded-xl inline-block shadow-inner mx-auto"></div>
-            <p class="text-xs text-slate-400">Pindai QR Code ini menggunakan aplikasi client di smartphone Anda.</p>
-            <button id="btnCloseQr" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-medium transition">
-                Tutup
-            </button>
+    <!-- Modal QR Code -->
+    <div id="qrModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-cardbg border border-bordercolor p-6 rounded-2xl max-w-sm w-full text-center space-y-4">
+            <h3 class="font-bold text-gray-200">QR Code Konversi</h3>
+            <div id="qrcode" class="flex justify-center p-4 bg-white rounded-xl"></div>
+            <button onclick="closeQrModal()" class="w-full bg-gray-800 hover:bg-gray-700 text-gray-200 text-xs font-bold py-2.5 rounded-xl border border-gray-700">Tutup</button>
         </div>
     </div>
 
-    <!-- Toast Notification Container -->
-    <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2 pointer-events-none"></div>
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-indigo-600 text-white px-4 py-2.5 rounded-xl shadow-xl text-xs font-semibold hidden transition-all duration-300"></div>
 
     <script>
-        // Core State
-        let currentFormat = 'clash';
-        let parsedNodes = [];
+        let currentTab = 'singbox';
+        let generatedContent = '';
 
-        // Toast Helper
-        function showToast(message, type = 'success') {
-            const toast = document.createElement('div');
-            const bgClass = type === 'success' ? 'bg-emerald-600 text-white' : 'bg-rose-600 text-white';
-            const iconClass = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
-            
-            toast.className = `flex items-center space-x-2 px-4 py-2.5 rounded-xl shadow-lg ${bgClass} text-xs font-medium transition transform translate-y-2 opacity-0 pointer-events-auto`;
-            toast.innerHTML = `<i class="fa-solid ${iconClass}"></i> <span>${message}</span>`;
-            
-            const container = document.getElementById('toastContainer');
-            container.appendChild(toast);
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`tab-${tab}`).classList.add('active');
 
-            setTimeout(() => {
-                toast.classList.remove('translate-y-2', 'opacity-0');
-            }, 10);
+            document.getElementById('form-singbox').classList.add('hidden');
+            document.getElementById('form-clash').classList.add('hidden');
+            document.getElementById('form-xray').classList.add('hidden');
+            document.getElementById('form-raw').classList.add('hidden');
 
-            setTimeout(() => {
-                toast.classList.add('opacity-0', 'translate-y-2');
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
+            document.getElementById(`form-${tab}`).classList.remove('hidden');
         }
 
-        // Safe Base64 Decoder
-        function safeAtob(str) {
+        function pasteClipboard() {
+            navigator.clipboard.readText().then(text => {
+                document.getElementById('rawInput').value = text;
+                showToast('Teks berhasil ditempel!');
+            }).catch(() => showToast('Gagal mengakses clipboard!'));
+        }
+
+        function clearInput() {
+            document.getElementById('rawInput').value = '';
+            document.getElementById('outputSection').classList.add('hidden');
+            showToast('Input dibersihkan.');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 3000);
+        }
+
+        // Safe Base64 Unicode Decoder
+        function safeBase64Decode(str) {
             try {
-                str = str.trim().replace(/-/g, '+').replace(/_/g, '/');
+                str = str.replace(/-/g, '+').replace(/_/g, '/');
                 while (str.length % 4) str += '=';
-                return decodeURIComponent(escape(window.atob(str)));
+                return decodeURIComponent(atob(str).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
             } catch (e) {
-                try {
-                    return window.atob(str);
-                } catch (err) {
-                    return null;
-                }
+                return atob(str);
             }
         }
 
-        // Protocol Parsers
-        function parseProxyUri(uri) {
-            uri = uri.trim();
-            if (!uri) return null;
-
-            try {
-                if (uri.startsWith('vless://')) {
-                    const url = new URL(uri);
-                    const query = new URLSearchParams(url.search);
-                    return {
-                        type: 'vless',
-                        name: decodeURIComponent(url.hash.replace('#', '') || 'VLESS Node'),
-                        server: url.hostname,
-                        port: parseInt(url.port) || 443,
-                        uuid: url.username,
-                        tls: query.get('security') === 'tls' || query.get('security') === 'reality',
-                        reality: query.get('security') === 'reality',
-                        network: query.get('type') || 'tcp',
-                        path: query.get('path') || '/',
-                        host: query.get('host') || '',
-                        sni: query.get('sni') || query.get('host') || url.hostname,
-                        fp: query.get('fp') || 'chrome',
-                        pbk: query.get('pbk') || '',
-                        sid: query.get('sid') || '',
-                        flow: query.get('flow') || ''
-                    };
-                }
-
-                if (uri.startsWith('vmess://')) {
-                    const rawBase64 = uri.replace('vmess://', '');
-                    const jsonStr = safeAtob(rawBase64);
-                    if (!jsonStr) return null;
-                    const data = JSON.parse(jsonStr);
-                    return {
-                        type: 'vmess',
-                        name: data.ps || 'VMess Node',
-                        server: data.add,
-                        port: parseInt(data.port) || 443,
-                        uuid: data.id,
-                        alterId: parseInt(data.aid) || 0,
-                        cipher: data.scy || 'auto',
-                        tls: data.tls === 'tls',
-                        network: data.net || 'tcp',
-                        path: data.path || '/',
-                        host: data.host || '',
-                        sni: data.sni || data.host || data.add
-                    };
-                }
-
-                if (uri.startsWith('trojan://')) {
-                    const url = new URL(uri);
-                    const query = new URLSearchParams(url.search);
-                    return {
-                        type: 'trojan',
-                        name: decodeURIComponent(url.hash.replace('#', '') || 'Trojan Node'),
-                        server: url.hostname,
-                        port: parseInt(url.port) || 443,
-                        password: url.username,
-                        tls: true,
-                        network: query.get('type') || 'tcp',
-                        path: query.get('path') || '/',
-                        host: query.get('host') || '',
-                        sni: query.get('sni') || query.get('host') || url.hostname
-                    };
-                }
-
-                if (uri.startsWith('ss://')) {
-                    const hashParts = uri.split('#');
-                    const name = hashParts[1] ? decodeURIComponent(hashParts[1]) : 'Shadowsocks Node';
-                    const mainPart = hashParts[0].replace('ss://', '');
-
-                    if (mainPart.includes('@')) {
-                        const [userinfo, serverPort] = mainPart.split('@');
-                        const decodedUserinfo = safeAtob(userinfo) || userinfo;
-                        const [cipher, password] = decodedUserinfo.split(':');
-                        const [server, port] = serverPort.split(':');
-                        return {
-                            type: 'shadowsocks',
-                            name: name,
-                            server: server,
-                            port: parseInt(port) || 8388,
-                            cipher: cipher,
-                            password: password
-                        };
-                    }
-                }
-            } catch (err) {
-                console.warn('Failed parsing line:', uri, err);
-            }
-            return null;
-        }
-
-        function processAndFilterNodes(inputText) {
-            let lines = inputText.split('\n').map(l => l.trim()).filter(Boolean);
-            let nodes = [];
-
-            // Check if Base64 sub
+        // Parse VLESS / VMess / Trojan / SS URLs
+        function parseProxyLinks(input) {
+            let lines = input.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+            
+            // Check if input is pure Base64
             if (lines.length === 1 && !lines[0].includes('://')) {
-                const decoded = safeAtob(lines[0]);
-                if (decoded && decoded.includes('://')) {
-                    lines = decoded.split('\n').map(l => l.trim()).filter(Boolean);
-                }
+                try {
+                    let decoded = safeBase64Decode(lines[0]);
+                    lines = decoded.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+                } catch(e){}
             }
 
-            lines.forEach(line => {
-                const node = parseProxyUri(line);
-                if (node) nodes.push(node);
+            let nodes = [];
+            let globalSni = document.getElementById('globalSni').value.trim();
+            let includeKw = document.getElementById('filterInclude').value.split(',').map(s => s.trim().toLowerCase()).filter(s => s);
+            let excludeKw = document.getElementById('filterExclude').value.split(',').map(s => s.trim().toLowerCase()).filter(s => s);
+
+            lines.forEach((line, index) => {
+                if (!line.includes('://')) return;
+                
+                let type = line.split('://')[0].toLowerCase();
+                let remark = `Node-${index + 1}`;
+                let server = '', port = 443, uuid = '', path = '/', sni = '', tls = true, transport = 'tcp';
+
+                try {
+                    if (type === 'vless' || type === 'trojan') {
+                        let url = new URL(line);
+                        uuid = url.username;
+                        server = url.hostname;
+                        port = parseInt(url.port) || 443;
+                        remark = decodeURIComponent(url.hash.replace('#', '')) || remark;
+                        
+                        let params = new URLSearchParams(url.search);
+                        transport = params.get('type') || 'tcp';
+                        path = params.get('path') || '/';
+                        sni = globalSni || params.get('sni') || params.get('host') || server;
+                        tls = params.get('security') === 'tls' || params.get('security') === 'reality';
+                    } else if (type === 'vmess') {
+                        let b64 = line.replace('vmess://', '');
+                        let json = JSON.parse(safeBase64Decode(b64));
+                        uuid = json.id;
+                        server = json.add;
+                        port = parseInt(json.port) || 443;
+                        remark = json.ps || remark;
+                        transport = json.net || 'tcp';
+                        path = json.path || '/';
+                        sni = globalSni || json.sni || json.host || server;
+                        tls = json.tls === 'tls';
+                    } else if (type === 'ss') {
+                        let url = new URL(line);
+                        server = url.hostname;
+                        port = parseInt(url.port) || 443;
+                        remark = decodeURIComponent(url.hash.replace('#', '')) || remark;
+                        uuid = url.username;
+                    }
+                } catch (e) {
+                    return;
+                }
+
+                // Apply Filters
+                let remarkLower = remark.toLowerCase();
+                if (includeKw.length > 0 && !includeKw.some(k => remarkLower.includes(k))) return;
+                if (excludeKw.length > 0 && excludeKw.some(k => remarkLower.includes(k))) return;
+
+                nodes.push({ type, name: remark, server, port, uuid, path, sni, tls, transport, raw: line });
             });
 
-            // Global SNI Override
-            const sniOverride = document.getElementById('globalSniOverride').value.trim();
-            if (sniOverride) {
-                nodes.forEach(n => {
-                    if (n.sni) n.sni = sniOverride;
-                    if (n.host) n.host = sniOverride;
-                });
-            }
-
-            // Keyword Include Filter
-            const includeKeywords = document.getElementById('filterInclude').value.trim().toLowerCase();
-            if (includeKeywords) {
-                const incArr = includeKeywords.split(',').map(k => k.trim()).filter(Boolean);
-                nodes = nodes.filter(n => incArr.some(k => n.name.toLowerCase().includes(k)));
-            }
-
-            // Keyword Exclude Filter
-            const excludeKeywords = document.getElementById('filterExclude').value.trim().toLowerCase();
-            if (excludeKeywords) {
-                const excArr = excludeKeywords.split(',').map(k => k.trim()).filter(Boolean);
-                nodes = nodes.filter(n => !excArr.some(k => n.name.toLowerCase().includes(k)));
-            }
-
-            // Deduplicate
-            if (document.getElementById('chkDeduplicate').checked) {
-                const seen = new Set();
+            if (document.getElementById('dedupeNodes').checked) {
+                let seen = new Set();
                 nodes = nodes.filter(n => {
-                    const key = `${n.type}-${n.server}-${n.port}-${n.uuid || n.password}`;
+                    let key = `${n.server}:${n.port}:${n.uuid}`;
                     if (seen.has(key)) return false;
                     seen.add(key);
                     return true;
@@ -575,445 +453,178 @@
             return nodes;
         }
 
-        function generateClashYaml(nodes) {
-            const mode = document.getElementById('clashMode').value;
-            const tun = document.getElementById('clashTun').value === 'true';
-            const tunStack = document.getElementById('clashTunStack').value;
-            const coreType = document.getElementById('clashCoreType').value;
-            const addAuto = document.getElementById('chkGroupAuto').checked;
-            const addFallback = document.getElementById('chkGroupFallback').checked;
-            const preset = document.getElementById('clashRulePreset').value;
-
-            let yaml = `# ==========================================\n`;
-            yaml += `# Generated by SubConverter Suite (convert.cassanova.my.id)\n`;
-            yaml += `# Core: ${coreType === 'meta' ? 'Clash Meta / Mihomo' : 'Clash Standard'}\n`;
-            yaml += `# ==========================================\n\n`;
-            
-            yaml += `port: 7890\nsocks-port: 7891\nallow-lan: true\nmode: ${mode}\nlog-level: info\nexternal-controller: 127.0.0.1:9090\n`;
-            
-            if (tun) {
-                yaml += `tun:\n  enable: true\n  stack: ${tunStack}\n  auto-route: true\n  auto-detect-interface: true\n`;
+        function generateConfig() {
+            let input = document.getElementById('rawInput').value.trim();
+            if (!input) {
+                showToast('Masukkan link proxy terlebih dahulu!');
+                return;
             }
 
-            yaml += `\nproxies:\n`;
-            const proxyNames = [];
-
-            nodes.forEach(n => {
-                proxyNames.push(`"${n.name}"`);
-                yaml += `  - name: "${n.name}"\n`;
-                yaml += `    type: ${n.type}\n`;
-                yaml += `    server: ${n.server}\n`;
-                yaml += `    port: ${n.port}\n`;
-
-                if (n.type === 'vless') {
-                    yaml += `    uuid: ${n.uuid}\n`;
-                    yaml += `    tls: ${n.tls}\n`;
-                    yaml += `    udp: true\n`;
-                    if (n.flow) yaml += `    flow: ${n.flow}\n`;
-                    if (n.sni) yaml += `    servername: ${n.sni}\n`;
-                    if (n.network === 'ws') {
-                        yaml += `    network: ws\n    ws-opts:\n      path: "${n.path}"\n`;
-                        if (n.host) yaml += `      headers:\n        Host: ${n.host}\n`;
-                    }
-                } else if (n.type === 'vmess') {
-                    yaml += `    uuid: ${n.uuid}\n`;
-                    yaml += `    alterId: ${n.alterId || 0}\n`;
-                    yaml += `    cipher: ${n.cipher || 'auto'}\n`;
-                    yaml += `    tls: ${n.tls}\n`;
-                    yaml += `    udp: true\n`;
-                    if (n.network === 'ws') {
-                        yaml += `    network: ws\n    ws-opts:\n      path: "${n.path}"\n`;
-                        if (n.host) yaml += `      headers:\n        Host: ${n.host}\n`;
-                    }
-                } else if (n.type === 'trojan') {
-                    yaml += `    password: ${n.password}\n`;
-                    yaml += `    udp: true\n`;
-                    if (n.sni) yaml += `    sni: ${n.sni}\n`;
-                } else if (n.type === 'shadowsocks') {
-                    yaml += `    cipher: ${n.cipher}\n`;
-                    yaml += `    password: ${n.password}\n`;
-                    yaml += `    udp: true\n`;
-                }
-                yaml += `\n`;
-            });
-
-            yaml += `proxy-groups:\n`;
-            yaml += `  - name: "PROXIES"\n    type: select\n    proxies:\n`;
-            if (addAuto) yaml += `      - "AUTO"\n`;
-            if (addFallback) yaml += `      - "FALLBACK"\n`;
-            proxyNames.forEach(p => yaml += `      - ${p}\n`);
-
-            if (addAuto) {
-                yaml += `\n  - name: "AUTO"\n    type: url-test\n    url: "http://www.gstatic.com/generate_204"\n    interval: 300\n    proxies:\n`;
-                proxyNames.forEach(p => yaml += `      - ${p}\n`);
+            let nodes = parseProxyLinks(input);
+            if (nodes.length === 0) {
+                showToast('Gagal membaca link proxy. Pastikan format benar!');
+                return;
             }
 
-            if (addFallback) {
-                yaml += `\n  - name: "FALLBACK"\n    type: fallback\n    url: "http://www.gstatic.com/generate_204"\n    interval: 300\n    proxies:\n`;
-                proxyNames.forEach(p => yaml += `      - ${p}\n`);
-            }
-
-            yaml += `\nrules:\n`;
-            if (preset === 'standard') {
-                yaml += `  - DOMAIN-SUFFIX,google.com,PROXIES\n  - GEOIP,LAN,DIRECT\n  - GEOIP,ID,DIRECT\n  - MATCH,PROXIES\n`;
+            if (currentTab === 'singbox') {
+                generatedContent = generateSingBoxConfig(nodes);
+            } else if (currentTab === 'clash') {
+                generatedContent = generateClashConfig(nodes);
+            } else if (currentTab === 'xray') {
+                generatedContent = generateXrayConfig(nodes);
             } else {
-                yaml += `  - GEOIP,LAN,DIRECT\n  - MATCH,PROXIES\n`;
+                generatedContent = btoa(nodes.map(n => n.raw).join('\n'));
             }
 
-            return yaml;
+            document.getElementById('outputResult').innerText = generatedContent;
+            document.getElementById('outputSection').classList.remove('hidden');
+            showToast(`Berhasil mengonversi ${nodes.length} node!`);
         }
 
-        function generateSingboxJson(nodes) {
-            const inboundMode = document.getElementById('sbInboundMode').value;
-            const dnsStrategy = document.getElementById('sbDnsStrategy').value;
-            const remoteDns = document.getElementById('sbRemoteDns').value;
-            const enableMux = document.getElementById('sbEnableMux').value === 'true';
-            const rulesetPreset = document.getElementById('sbRulesetPreset').value;
-            const customDirect = document.getElementById('sbCustomDirectDomains').value.trim();
-            const enableClashApi = document.getElementById('sbClashApi').value === 'true';
+        // SING-BOX GENERATOR (100% Match singbox-converter options)
+        function generateSingBoxConfig(nodes) {
+            let dashboard = document.getElementById('sbDashboard').value;
+            let splitGroups = document.getElementById('sbSplitGroups').checked;
+            let bypassWA = document.getElementById('sbBypassWA').checked;
+            let insecure = document.getElementById('sbInsecure').checked;
+            let blockQuic = document.getElementById('sbBlockQuic').value;
 
-            const outbounds = [];
-            const allNodeNames = nodes.map(n => n.name);
+            let outbounds = nodes.map(n => ({
+                type: n.type,
+                tag: n.name,
+                server: n.server,
+                server_port: n.port,
+                uuid: n.uuid,
+                tls: n.tls ? { enabled: true, server_name: n.sni, insecure: insecure } : undefined,
+                transport: n.transport === 'ws' ? { type: 'ws', path: n.path } : undefined
+            }));
 
-            // Selector Group
-            outbounds.push({
-                type: "selector",
-                tag: "proxy",
-                outbounds: ["auto", ...allNodeNames]
-            });
+            let nodeTags = outbounds.map(o => o.tag);
+            let autoTag = "Auto Select";
 
-            // Auto URL Test Group
-            outbounds.push({
-                type: "urltest",
-                tag: "auto",
-                outbounds: allNodeNames,
-                url: "https://www.gstatic.com/generate_204",
-                interval: "3m"
-            });
-
-            // Direct & Block
-            outbounds.push({ type: "direct", tag: "direct" });
-            outbounds.push({ type: "block", tag: "block" });
-
-            // Convert Nodes
-            nodes.forEach(n => {
-                let nodeConfig = {
-                    tag: n.name,
-                    server: n.server,
-                    server_port: n.port
-                };
-
-                if (enableMux) {
-                    nodeConfig.multiplex = { enabled: true, max_connections: 4 };
+            let groups = [
+                {
+                    type: "selector",
+                    tag: "Proxy",
+                    outbounds: [autoTag, ...nodeTags]
+                },
+                {
+                    type: "urltest",
+                    tag: autoTag,
+                    outbounds: nodeTags,
+                    url: "http://www.gstatic.com/generate_204",
+                    interval: "1m"
                 }
-
-                if (n.type === 'vless') {
-                    nodeConfig.type = 'vless';
-                    nodeConfig.uuid = n.uuid;
-                    if (n.flow) nodeConfig.flow = n.flow;
-                    if (n.tls) {
-                        nodeConfig.tls = {
-                            enabled: true,
-                            server_name: n.sni || n.server,
-                            insecure: false
-                        };
-                    }
-                    if (n.network === 'ws') {
-                        nodeConfig.transport = {
-                            type: 'ws',
-                            path: n.path,
-                            headers: n.host ? { Host: n.host } : {}
-                        };
-                    }
-                } else if (n.type === 'vmess') {
-                    nodeConfig.type = 'vmess';
-                    nodeConfig.uuid = n.uuid;
-                    nodeConfig.security = n.cipher || 'auto';
-                    if (n.tls) {
-                        nodeConfig.tls = { enabled: true, server_name: n.sni || n.server };
-                    }
-                    if (n.network === 'ws') {
-                        nodeConfig.transport = { type: 'ws', path: n.path };
-                    }
-                } else if (n.type === 'trojan') {
-                    nodeConfig.type = 'trojan';
-                    nodeConfig.password = n.password;
-                    nodeConfig.tls = { enabled: true, server_name: n.sni || n.server };
-                } else if (n.type === 'shadowsocks') {
-                    nodeConfig.type = 'shadowsocks';
-                    nodeConfig.method = n.cipher;
-                    nodeConfig.password = n.password;
-                }
-
-                outbounds.push(nodeConfig);
-            });
-
-            // Inbounds Setup
-            const inbounds = [];
-            if (inboundMode === 'tun') {
-                inbounds.push({
-                    type: "tun",
-                    tag: "tun-in",
-                    interface_name: "tun0",
-                    inet4_address: "172.19.0.1/30",
-                    auto_route: true,
-                    strict_route: true
-                });
-            } else {
-                inbounds.push({
-                    type: "mixed",
-                    tag: "mixed-in",
-                    listen: "127.0.0.1",
-                    listen_port: 2080
-                });
-            }
-
-            // Route Rules
-            const rules = [
-                { action: "sniff" },
-                { protocol: "dns", action: "hijack-dns" },
-                { ip_is_private: true, outbound: "direct" }
             ];
 
-            if (customDirect) {
-                const domains = customDirect.split(',').map(d => d.trim()).filter(Boolean);
-                if (domains.length > 0) {
-                    rules.push({ domain_suffix: domains, outbound: "direct" });
-                }
+            if (splitGroups) {
+                groups.push(
+                    { type: "selector", tag: "Primary", outbounds: nodeTags },
+                    { type: "selector", tag: "Backup", outbounds: nodeTags }
+                );
             }
 
-            if (rulesetPreset === 'adblock_indo') {
-                rules.push({ geosite: ["category-ads-all"], outbound: "block" });
-                rules.push({ geoip: ["id"], outbound: "direct" });
+            let rules = [];
+            if (bypassWA) {
+                rules.push({ domain_suffix: ["whatsapp.com", "whatsapp.net"], outbound: "direct" });
+            }
+            if (blockQuic === 'video') {
+                rules.push({ protocol: ["quic"], domain_suffix: ["googlevideo.com", "tiktokcdn.com"], outbound: "block" });
             }
 
-            const config = {
-                log: { level: "info", timestamp: true },
-                dns: {
-                    servers: [
-                        { tag: "dns_proxy", address: remoteDns, address_resolver: "dns_direct" },
-                        { tag: "dns_direct", address: "1.1.1.1", detour: "direct" }
-                    ],
-                    strategy: dnsStrategy
+            let config = {
+                experimental: {
+                    clash_api: {
+                        external_controller: "127.0.0.40:9090",
+                        external_ui: dashboard,
+                        external_ui_download_url: "https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip"
+                    }
                 },
-                inbounds: inbounds,
-                outbounds: outbounds,
+                inbounds: [
+                    { type: "mixed", tag: "mixed-in", listen: "127.0.0.1", listen_port: 2080 }
+                ],
+                outbounds: [
+                    ...groups,
+                    ...outbounds,
+                    { type: "direct", tag: "direct" },
+                    { type: "block", tag: "block" }
+                ],
                 route: {
                     rules: rules,
-                    auto_detect_interface: true,
-                    final: "proxy"
+                    auto_detect_interface: true
                 }
             };
-
-            if (enableClashApi) {
-                config.experimental = {
-                    clash_api: {
-                        external_controller: "127.0.0.1:9090",
-                        external_ui: "dashboard"
-                    }
-                };
-            }
 
             return JSON.stringify(config, null, 2);
         }
 
-        function generateXrayJson(nodes) {
-            const inboundProtocol = document.getElementById('xrayInboundProtocol').value;
-            const sniffing = document.getElementById('xraySniffing').value === 'true';
+        // CLASH GENERATOR
+        function generateClashConfig(nodes) {
+            let mode = document.getElementById('clashMode').value;
+            let tun = document.getElementById('clashTun').value;
 
-            const outbounds = nodes.map(n => {
-                let outbound = {
-                    protocol: n.type,
-                    tag: n.name,
-                    settings: {}
-                };
-
-                if (n.type === 'vless' || n.type === 'vmess') {
-                    outbound.settings.vnext = [{
-                        address: n.server,
-                        port: n.port,
-                        users: [{ id: n.uuid, encryption: n.cipher || 'none' }]
-                    }];
-                } else if (n.type === 'trojan') {
-                    outbound.settings.servers = [{
-                        address: n.server,
-                        port: n.port,
-                        password: n.password
-                    }];
-                } else if (n.type === 'shadowsocks') {
-                    outbound.settings.servers = [{
-                        address: n.server,
-                        port: n.port,
-                        method: n.cipher,
-                        password: n.password
-                    }];
-                }
-
-                outbound.streamSettings = {
-                    network: n.network || 'tcp',
-                    security: n.tls ? 'tls' : 'none'
-                };
-
-                return outbound;
-            });
-
-            const xrayConfig = {
-                log: { loglevel: "warning" },
-                inbounds: [{
-                    port: inboundProtocol === 'socks' ? 10808 : 10809,
-                    protocol: inboundProtocol,
-                    sniffing: { enabled: sniffing, destOverride: ["http", "tls"] }
-                }],
-                outbounds: outbounds
-            };
-
-            return JSON.stringify(xrayConfig, null, 2);
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const inputProxies = document.getElementById('inputProxies');
-            const outputResult = document.getElementById('outputResult');
-            const detectedNodesCount = document.getElementById('detectedNodesCount');
-            const outputFormatBadge = document.getElementById('outputFormatBadge');
-            const outputStats = document.getElementById('outputStats');
-
-            // Accordion Toggle for Global Modifier
-            const toggleGlobalModifier = document.getElementById('toggleGlobalModifier');
-            const globalModifierContent = document.getElementById('globalModifierContent');
-            const globalModifierIcon = document.getElementById('globalModifierIcon');
-
-            toggleGlobalModifier.addEventListener('click', () => {
-                globalModifierContent.classList.toggle('hidden');
-                globalModifierIcon.classList.toggle('rotate-180');
-            });
-
-            // Format Tab Switching
-            document.querySelectorAll('#formatTabGroup .tab-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('#formatTabGroup .tab-btn').forEach(b => {
-                        b.classList.remove('bg-brand-600', 'text-white', 'shadow');
-                        b.classList.add('text-slate-400');
-                    });
-                    btn.classList.add('bg-brand-600', 'text-white', 'shadow');
-                    btn.classList.remove('text-slate-400');
-
-                    currentFormat = btn.dataset.format;
-                    outputFormatBadge.textContent = currentFormat.toUpperCase();
-
-                    // Panel Visibility Toggle
-                    document.querySelectorAll('.context-panel').forEach(p => p.classList.add('hidden'));
-                    if (currentFormat === 'singbox') {
-                        document.getElementById('singboxSettings').classList.remove('hidden');
-                    } else if (currentFormat === 'clash') {
-                        document.getElementById('clashSettings').classList.remove('hidden');
-                    } else if (currentFormat === 'xray') {
-                        document.getElementById('xraySettings').classList.remove('hidden');
-                    }
-
-                    executeConversion();
-                });
-            });
-
-            // Input Monitor
-            inputProxies.addEventListener('input', () => {
-                parsedNodes = processAndFilterNodes(inputProxies.value);
-                detectedNodesCount.innerHTML = `<i class="fa-solid fa-cubes text-brand-400 mr-1"></i> Terdeteksi: ${parsedNodes.length} node`;
-            });
-
-            // Conversion Trigger
-            document.getElementById('btnConvert').addEventListener('click', executeConversion);
-
-            function executeConversion() {
-                parsedNodes = processAndFilterNodes(inputProxies.value);
-                detectedNodesCount.innerHTML = `<i class="fa-solid fa-cubes text-brand-400 mr-1"></i> Terdeteksi: ${parsedNodes.length} node`;
-
-                if (parsedNodes.length === 0) {
-                    outputResult.value = "# Tidak ada proxy valid yang terdeteksi.\n# Silakan tempelkan link proxy (vless://, vmess://, trojan://, ss://) di kolom sebelah kiri.";
-                    outputStats.textContent = "Baris: 0 | Ukuran: 0 KB";
-                    return;
-                }
-
-                let result = "";
-                if (currentFormat === 'clash') {
-                    result = generateClashYaml(parsedNodes);
-                } else if (currentFormat === 'singbox') {
-                    result = generateSingboxJson(parsedNodes);
-                } else if (currentFormat === 'xray') {
-                    result = generateXrayJson(parsedNodes);
-                } else if (currentFormat === 'base64') {
-                    const rawLines = inputProxies.value.trim();
-                    result = btoa(rawLines);
-                }
-
-                outputResult.value = result;
-                const lines = result.split('\n').length;
-                const sizeKb = (new Blob([result]).size / 1024).toFixed(2);
-                outputStats.textContent = `Baris: ${lines} | Ukuran: ${sizeKb} KB`;
-
-                showToast(`Sukses mengonversi ${parsedNodes.length} node ke format ${currentFormat.toUpperCase()}!`);
+            let yaml = `# Generated by convert.cassanova.my.id\n`;
+            yaml += `port: 7890\nsocks-port: 7891\nmode: ${mode}\nallow-lan: true\n`;
+            
+            if (tun !== 'disable') {
+                yaml += `tun:\n  enable: true\n  stack: ${tun === 'gvisor' ? 'gvisor' : 'system'}\n  auto-route: true\n`;
             }
 
-            // Copy Action
-            document.getElementById('btnCopyOutput').addEventListener('click', () => {
-                if (!outputResult.value) return;
-                navigator.clipboard.writeText(outputResult.value);
-                showToast("Hasil konversi berhasil disalin ke clipboard!");
+            yaml += `proxies:\n`;
+            nodes.forEach(n => {
+                yaml += `  - name: "${n.name}"\n    type: ${n.type}\n    server: ${n.server}\n    port: ${n.port}\n    uuid: ${n.uuid}\n    tls: ${n.tls}\n    servername: ${n.sni}\n`;
             });
 
-            // Download Action
-            document.getElementById('btnDownloadOutput').addEventListener('click', () => {
-                if (!outputResult.value) return;
-                const ext = currentFormat === 'clash' ? 'yaml' : currentFormat === 'base64' ? 'txt' : 'json';
-                const blob = new Blob([outputResult.value], { type: 'text/plain' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `config-${currentFormat}.${ext}`;
-                a.click();
-                URL.revokeObjectURL(url);
-                showToast(`File config-${currentFormat}.${ext} berhasil diunduh!`);
-            });
+            yaml += `proxy-groups:\n  - name: PROXIES\n    type: select\n    proxies:\n      - AUTO\n` + nodes.map(n => `      - "${n.name}"`).join('\n') + `\n`;
+            yaml += `  - name: AUTO\n    type: url-test\n    url: http://www.gstatic.com/generate_204\n    interval: 300\n    proxies:\n` + nodes.map(n => `      - "${n.name}"`).join('\n') + `\n`;
 
-            // Clear Action
-            document.getElementById('btnClearInput').addEventListener('click', () => {
-                inputProxies.value = '';
-                outputResult.value = '';
-                parsedNodes = [];
-                detectedNodesCount.innerHTML = `<i class="fa-solid fa-cubes text-brand-400 mr-1"></i> Terdeteksi: 0 node`;
-                outputStats.textContent = "Baris: 0 | Ukuran: 0 KB";
-                showToast("Kolom masukan telah dibersihkan.");
-            });
+            yaml += `rules:\n  - GEOIP,LAN,DIRECT\n  - GEOIP,ID,DIRECT\n  - MATCH,PROXIES\n`;
+            return yaml;
+        }
 
-            // Sample Data Loader
-            document.getElementById('btnSampleData').addEventListener('click', () => {
-                inputProxies.value = `vless://a1b2c3d4-e5f6-7890-abcd-ef1234567890@sg.cassanova.biz.id:443?type=ws&security=tls&path=%2Fvless-ws&host=sg.cassanova.biz.id&sni=sg.cassanova.biz.id#SG-VLESS-Fast
-vmess://eyB2IjogIjIiLCAicHMiOiAiSUQtVk1lc3MtU3BlZWQiLCAiYWRkIjogImlkLmNhc3Nhbm92YS5iaXouaWQiLCAicG9ydCI6IDQ0MywgImlkIjogImExYjJjM2Q0LWU1ZjYtNzg5MC1hYmNkLWVmMTIzNDU2Nzg5MCIsICJhaWQiOiAwLCAic2N5IjogImF1dG8iLCAibmV0IjogIndzIiwgInR5cGUiOiAibm9uZSIsICJob3N0IjogImlkLmNhc3Nhbm92YS5iaXouaWQiLCAicGF0aCI6ICIvdm1lc3Mtd3MiLCAidGxzIjogInRscyIgfQ==
-trojan://password123@hk.cassanova.biz.id:443?type=ws&security=tls&path=%2Ftrojan-ws#HK-Trojan-VIP`;
-                parsedNodes = processAndFilterNodes(inputProxies.value);
-                detectedNodesCount.innerHTML = `<i class="fa-solid fa-cubes text-brand-400 mr-1"></i> Terdeteksi: ${parsedNodes.length} node`;
-                executeConversion();
-            });
+        // XRAY GENERATOR
+        function generateXrayConfig(nodes) {
+            let sniffing = document.getElementById('xraySniffing').value === 'on';
+            let config = {
+                inbounds: [{
+                    port: 10808,
+                    protocol: "socks",
+                    sniffing: { enabled: sniffing, destOverride: ["http", "tls"] }
+                }],
+                outbounds: nodes.map(n => ({
+                    protocol: n.type,
+                    settings: { vnext: [{ address: n.server, port: n.port, users: [{ id: n.uuid }] }] },
+                    tag: n.name
+                }))
+            };
+            return JSON.stringify(config, null, 2);
+        }
 
-            // QR Code Modal
-            const qrModal = document.getElementById('qrModal');
-            document.getElementById('btnShowQr').addEventListener('click', () => {
-                if (!outputResult.value) {
-                    showToast("Lakukan konversi terlebih dahulu!", "error");
-                    return;
-                }
-                document.getElementById('qrcode').innerHTML = '';
-                new QRCode(document.getElementById("qrcode"), {
-                    text: outputResult.value.substring(0, 1200),
-                    width: 220,
-                    height: 220
-                });
-                qrModal.classList.remove('hidden');
-            });
+        function copyOutput() {
+            navigator.clipboard.writeText(generatedContent).then(() => showToast('Hasil konversi berhasil disalin!'));
+        }
 
-            document.getElementById('btnCloseQr').addEventListener('click', () => {
-                qrModal.classList.add('hidden');
-            });
-        });
+        function downloadOutput() {
+            let ext = currentTab === 'clash' ? 'yaml' : (currentTab === 'raw' ? 'txt' : 'json');
+            let blob = new Blob([generatedContent], { type: 'text/plain' });
+            let a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `config-${currentTab}.${ext}`;
+            a.click();
+            showToast(`File config-${currentTab}.${ext} diunduh.`);
+        }
+
+        function showQrCode() {
+            let modal = document.getElementById('qrModal');
+            let container = document.getElementById('qrcode');
+            container.innerHTML = '';
+            new QRCode(container, { text: generatedContent.substring(0, 1000), width: 200, height: 200 });
+            modal.classList.remove('hidden');
+        }
+
+        function closeQrModal() {
+            document.getElementById('qrModal').classList.add('hidden');
+        }
     </script>
 </body>
 </html>
