@@ -42,52 +42,64 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #080a0f;
             background-image: 
-                radial-gradient(circle at 50% 0%, rgba(217, 119, 6, 0.15) 0%, transparent 60%),
-                radial-gradient(circle at 100% 100%, rgba(180, 83, 9, 0.08) 0%, transparent 50%);
+                radial-gradient(circle at 50% 0%, rgba(217, 119, 6, 0.18) 0%, transparent 65%),
+                radial-gradient(circle at 100% 100%, rgba(180, 83, 9, 0.1) 0%, transparent 50%);
             background-attachment: fixed;
             color: #e2e8f0;
         }
 
-        /* 3D Gold Metallic Button Style */
-        .btn-gold-3d {
-            background: linear-gradient(180deg, #f59e0b 0%, #d97706 40%, #b45309 100%);
+        /* SUPER 3D GOLD METALLIC BUTTON STYLE (Presisi Sesuai Referensi Xray Studio) */
+        .btn-gold-super3d {
+            background: linear-gradient(180deg, #fef08a 0%, #f59e0b 25%, #d97706 65%, #92400e 100%);
+            border: 1px solid #fef08a;
+            border-bottom: 4px solid #78350f;
+            border-radius: 0.875rem;
             box-shadow: 
-                inset 0 1px 0 rgba(255, 255, 255, 0.4),
-                inset 0 -2px 0 rgba(0, 0, 0, 0.4),
-                0 8px 25px -4px rgba(217, 119, 6, 0.45);
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+                inset 0 2px 1px rgba(255, 255, 255, 0.8),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.5),
+                0 6px 0 #602507,
+                0 14px 28px rgba(245, 158, 11, 0.45);
+            color: #090d16;
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+            transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
         }
-        .btn-gold-3d:hover {
-            background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 40%, #d97706 100%);
+
+        .btn-gold-super3d:hover {
+            background: linear-gradient(180deg, #ffffff 0%, #fbbf24 30%, #f59e0b 70%, #b45309 100%);
             box-shadow: 
-                inset 0 1px 0 rgba(255, 255, 255, 0.6),
-                inset 0 -2px 0 rgba(0, 0, 0, 0.4),
-                0 12px 30px -2px rgba(245, 158, 11, 0.6);
+                inset 0 2px 2px rgba(255, 255, 255, 0.9),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.5),
+                0 8px 0 #602507,
+                0 18px 35px rgba(251, 191, 36, 0.65);
             transform: translateY(-2px);
         }
-        .btn-gold-3d:active {
-            transform: translateY(1px);
+
+        .btn-gold-super3d:active {
+            transform: translateY(4px);
             box-shadow: 
-                inset 0 2px 4px rgba(0, 0, 0, 0.5),
+                inset 0 2px 5px rgba(0, 0, 0, 0.7),
+                0 2px 0 #602507,
                 0 4px 12px rgba(217, 119, 6, 0.3);
         }
 
         /* 3D Dark Glass Panel Style */
         .glass-card-3d {
             background: linear-gradient(145deg, #131824 0%, #0d111a 100%);
-            border: 1px solid rgba(245, 158, 11, 0.2);
+            border: 1px solid rgba(245, 158, 11, 0.25);
             box-shadow: 
-                0 15px 35px -5px rgba(0, 0, 0, 0.7),
-                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+                0 15px 35px -5px rgba(0, 0, 0, 0.75),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .glass-card-3d:hover {
-            border-color: rgba(245, 158, 11, 0.5);
+            border-color: rgba(245, 158, 11, 0.6);
             box-shadow: 
-                0 20px 40px -5px rgba(0, 0, 0, 0.8),
-                0 0 25px rgba(245, 158, 11, 0.15),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                0 22px 45px -5px rgba(0, 0, 0, 0.85),
+                0 0 30px rgba(245, 158, 11, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
             transform: translateY(-3px);
         }
 
@@ -95,8 +107,8 @@
         .glass-card-active {
             border-color: #fbbf24 !important;
             box-shadow: 
-                0 0 30px -5px rgba(245, 158, 11, 0.35),
-                inset 0 0 15px rgba(245, 158, 11, 0.1) !important;
+                0 0 35px -5px rgba(245, 158, 11, 0.45),
+                inset 0 0 20px rgba(245, 158, 11, 0.15) !important;
         }
 
         /* Gold Metallic Text Gradient */
@@ -104,51 +116,25 @@
             background: linear-gradient(135deg, #fef3c7 0%, #fbbf24 50%, #d97706 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.2));
+            filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.25));
         }
 
         .gold-badge {
-            background: rgba(245, 158, 11, 0.1);
-            border: 1px solid rgba(245, 158, 11, 0.3);
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.35);
             color: #fbbf24;
         }
 
         .last-used-badge {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(217, 119, 6, 0.15) 100%);
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.3) 0%, rgba(217, 119, 6, 0.2) 100%);
             border: 1px solid #fbbf24;
             color: #fef3c7;
             animation: pulse-glow 2s infinite ease-in-out;
         }
 
         @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 8px rgba(251, 191, 36, 0.2); }
-            50% { box-shadow: 0 0 18px rgba(251, 191, 36, 0.6); }
-        }
-
-        /* Gloss Overlay Animation */
-        .gloss-effect {
-            position: relative;
-            overflow: hidden;
-        }
-        .gloss-effect::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                45deg,
-                transparent 45%,
-                rgba(255, 255, 255, 0.08) 50%,
-                transparent 55%
-            );
-            transform: rotate(30deg);
-            transition: all 0.6s ease;
-            pointer-events: none;
-        }
-        .gloss-effect:hover::before {
-            left: 100%;
+            0%, 100% { box-shadow: 0 0 8px rgba(251, 191, 36, 0.25); }
+            50% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.7); }
         }
 
         /* Status Online Pulse */
@@ -157,7 +143,7 @@
             height: 8px;
             background-color: #10b981;
             border-radius: 50%;
-            box-shadow: 0 0 8px #10b981;
+            box-shadow: 0 0 10px #10b981;
             display: inline-block;
         }
     </style>
@@ -166,8 +152,8 @@
 
     <!-- Header / Brand Section -->
     <header class="w-full max-w-4xl text-center space-y-3 pt-4 mb-6">
-        <div class="inline-flex items-center justify-center p-3 rounded-2xl bg-gradient-to-b from-amber-500/20 to-amber-900/10 border border-amber-500/30 shadow-2xl mb-2">
-            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-amber-600 to-yellow-400 flex items-center justify-center shadow-lg shadow-amber-500/40">
+        <div class="inline-flex items-center justify-center p-3.5 rounded-2xl bg-gradient-to-b from-amber-500/25 to-amber-900/15 border border-amber-500/40 shadow-2xl mb-2">
+            <div class="w-14 h-14 rounded-xl bg-gradient-to-tr from-amber-600 via-yellow-400 to-amber-200 flex items-center justify-center shadow-xl shadow-amber-500/50 border border-amber-200">
                 <i class="fa-solid fa-server text-gray-950 text-2xl font-black"></i>
             </div>
         </div>
@@ -187,8 +173,8 @@
         </p>
 
         <!-- Quick Decoder Tool Trigger Button -->
-        <div class="pt-2">
-            <button onclick="openDecoderModal()" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900/90 border border-amber-500/30 text-amber-400 text-xs font-bold hover:bg-amber-500/10 hover:border-amber-500/60 transition shadow-lg">
+        <div class="pt-3">
+            <button onclick="openDecoderModal()" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900/90 border border-amber-500/40 text-amber-300 text-xs font-bold hover:bg-amber-500/20 hover:border-amber-400 transition shadow-lg shadow-amber-500/10">
                 <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i>
                 <span>🛠️ Quick Base64 & URL Decoder</span>
             </button>
@@ -199,7 +185,7 @@
     <main class="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6 my-auto">
 
         <!-- CARD POSITION 1 (REPO 3: CLASH CONVERTER) -->
-        <div id="card-clash" class="glass-card-3d gloss-effect rounded-2xl p-6 flex flex-col justify-between space-y-5">
+        <div id="card-clash" class="glass-card-3d rounded-2xl p-6 flex flex-col justify-between space-y-5">
             <div class="space-y-3">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
@@ -229,13 +215,13 @@
             </div>
 
             <a href="https://clash.cassanova.my.id" target="_blank" rel="noopener" onclick="recordVisit('clash')"
-               class="btn-gold-3d w-full py-3 rounded-xl font-extrabold text-xs text-slate-950 uppercase tracking-wider flex items-center justify-center gap-2">
-                <i class="fa-solid fa-fire"></i> Buka Clash Converter
+               class="btn-gold-super3d w-full py-3.5 rounded-xl text-xs uppercase flex items-center justify-center gap-2">
+                <i class="fa-solid fa-fire text-sm"></i> Buka Clash Converter
             </a>
         </div>
 
         <!-- CARD POSITION 2 (REPO 2: SING-BOX CONVERTER) -->
-        <div id="card-singbox" class="glass-card-3d gloss-effect rounded-2xl p-6 flex flex-col justify-between space-y-5">
+        <div id="card-singbox" class="glass-card-3d rounded-2xl p-6 flex flex-col justify-between space-y-5">
             <div class="space-y-3">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
@@ -265,13 +251,13 @@
             </div>
 
             <a href="https://singbox.cassanova.my.id" target="_blank" rel="noopener" onclick="recordVisit('singbox')"
-               class="btn-gold-3d w-full py-3 rounded-xl font-extrabold text-xs text-slate-950 uppercase tracking-wider flex items-center justify-center gap-2">
-                <i class="fa-solid fa-bolt"></i> Buka Sing-Box Converter
+               class="btn-gold-super3d w-full py-3.5 rounded-xl text-xs uppercase flex items-center justify-center gap-2">
+                <i class="fa-solid fa-bolt text-sm"></i> Buka Sing-Box Converter
             </a>
         </div>
 
         <!-- CARD POSITION 3 (REPO 4: XRAY STUDIO) -->
-        <div id="card-xray" class="glass-card-3d gloss-effect rounded-2xl p-6 flex flex-col justify-between space-y-5">
+        <div id="card-xray" class="glass-card-3d rounded-2xl p-6 flex flex-col justify-between space-y-5">
             <div class="space-y-3">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
@@ -301,13 +287,13 @@
             </div>
 
             <a href="https://xray-studio.cassanova.my.id" target="_blank" rel="noopener" onclick="recordVisit('xray')"
-               class="btn-gold-3d w-full py-3 rounded-xl font-extrabold text-xs text-slate-950 uppercase tracking-wider flex items-center justify-center gap-2">
-                <i class="fa-solid fa-wand-magic-sparkles"></i> Buka Xray Studio
+               class="btn-gold-super3d w-full py-3.5 rounded-xl text-xs uppercase flex items-center justify-center gap-2">
+                <i class="fa-solid fa-wand-magic-sparkles text-sm"></i> Buka Xray Studio
             </a>
         </div>
 
         <!-- CARD POSITION 4 (REPO 1: MULTI-PROTOCOL CONVERTER) -->
-        <div id="card-multi" class="glass-card-3d gloss-effect rounded-2xl p-6 flex flex-col justify-between space-y-5">
+        <div id="card-multi" class="glass-card-3d rounded-2xl p-6 flex flex-col justify-between space-y-5">
             <div class="space-y-3">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
@@ -337,8 +323,8 @@
             </div>
 
             <a href="https://multi.cassanova.my.id/" target="_blank" rel="noopener" onclick="recordVisit('multi')"
-               class="btn-gold-3d w-full py-3 rounded-xl font-extrabold text-xs text-slate-950 uppercase tracking-wider flex items-center justify-center gap-2">
-                <i class="fa-solid fa-link"></i> Buka Multi-Protocol
+               class="btn-gold-super3d w-full py-3.5 rounded-xl text-xs uppercase flex items-center justify-center gap-2">
+                <i class="fa-solid fa-link text-sm"></i> Buka Multi-Protocol
             </a>
         </div>
 
@@ -346,7 +332,7 @@
 
     <!-- QUICK DECODER MODAL (Toolbox Tambahan) -->
     <div id="decoderModal" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-gradient-to-b from-slate-900 to-slate-950 border border-amber-500/30 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+        <div class="bg-gradient-to-b from-slate-900 to-slate-950 border border-amber-500/40 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
             <div class="flex justify-between items-center border-b border-slate-800 pb-3">
                 <h3 class="text-base font-extrabold text-amber-400 flex items-center gap-2">
                     <i class="fa-solid fa-code"></i> Quick Base64 & URL Decoder
@@ -363,13 +349,13 @@
                 </div>
 
                 <div class="flex gap-2">
-                    <button onclick="processDecode('base64')" class="flex-1 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 font-bold text-xs py-2 rounded-lg transition">
+                    <button onclick="processDecode('base64')" class="flex-1 btn-gold-super3d py-2 text-xs rounded-xl">
                         Decode Base64
                     </button>
-                    <button onclick="processDecode('url')" class="flex-1 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 font-bold text-xs py-2 rounded-lg transition">
+                    <button onclick="processDecode('url')" class="flex-1 btn-gold-super3d py-2 text-xs rounded-xl">
                         Decode URL
                     </button>
-                    <button onclick="clearDecoder()" class="px-3 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold rounded-lg transition">
+                    <button onclick="clearDecoder()" class="px-4 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold rounded-xl border border-slate-700 transition">
                         Reset
                     </button>
                 </div>
